@@ -25,7 +25,7 @@
       color:var(--text);
       background:
         linear-gradient(rgba(8,12,20,var(--mask)), rgba(8,12,20,var(--mask))),
-        url('assets/background.jpg') center/cover no-repeat;
+        url('assets/bg.jpg') center/cover no-repeat;
       display:flex;flex-direction:column;align-items:center;
       min-height:100svh;
     }
@@ -86,7 +86,7 @@
 
     .actions{display:flex;gap:10px;flex-wrap:wrap}
 
-    /* Buttons (parıltı + shimmer) */
+    /* Buttons */
     .btn{
       position:relative; overflow:hidden;
       padding:12px 16px;border-radius:10px;font-weight:800;cursor:pointer;border:none;
@@ -94,90 +94,58 @@
       min-height:44px; font-size:16px;
     }
     .btn:active{ transform:translateY(1px) }
-    .btn::after{
-      content:""; position:absolute; inset:-2px; pointer-events:none;
-      box-shadow:var(--glow);
-      transition:box-shadow .25s ease;
-      border-radius:12px;
-    }
+    .btn::after{ content:""; position:absolute; inset:-2px; pointer-events:none; box-shadow:var(--glow); transition:box-shadow .25s ease; border-radius:12px; }
     .btn:hover::after{ box-shadow:0 0 0 4px rgba(241,161,63,.12), 0 6px 18px rgba(241,161,63,.22); }
-    .btn::before{
-      content:""; position:absolute; top:0; left:-150%;
-      width:120%; height:100%;
-      background:linear-gradient(110deg, transparent 0%, rgba(255,255,255,.22) 40%, transparent 60%);
-      transform:skewX(-16deg);
-    }
+    .btn::before{ content:""; position:absolute; top:0; left:-150%; width:120%; height:100%; background:linear-gradient(110deg, transparent 0%, rgba(255,255,255,.22) 40%, transparent 60%); transform:skewX(-16deg); }
     .btn:hover::before{ animation:shimmer 800ms ease forwards; }
     @keyframes shimmer{ to{ left:130%; } }
 
     .btn-primary{background:var(--orange);color:#1b1b1b;box-shadow:0 6px 16px rgba(242,140,27,.22)}
     .btn-ghost{background:transparent;color:#fff;border:1px solid #555b66}
 
-    /* Berekenen loading */
+    /* Loading */
     .btn-primary.loading{ position:relative; color:#1b1b1b; }
     .btn-primary.loading .spinner{
       display:inline-block; width:16px; height:16px; border:2px solid rgba(0,0,0,.25);
       border-top-color:#1b1b1b; border-radius:50%; margin-left:8px;
-      animation:spin .8s linear infinite;
-      vertical-align:-3px;
+      animation:spin .8s linear infinite; vertical-align:-3px;
     }
     @keyframes spin{ to{ transform:rotate(360deg) } }
 
-    /* Sosyal kart */
+    /* Sosyal kart: sol-alt, collapse'lı */
     .social{
-      position:fixed; left:22px; bottom:22px;
-      display:flex; flex-direction:column; align-items:center; gap:10px;
-      z-index:1000;
+      position:fixed; left:16px; bottom:16px; z-index:1000;
+      display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+    }
+    .social-toggle{
+      width:48px; height:48px; border-radius:50%; display:grid; place-items:center;
+      background:#0f1624; border:1px solid #25324a; cursor:pointer;
+      box-shadow:0 10px 20px rgba(0,0,0,.35);
     }
     .social-card{
       background:var(--glass); border:1px solid #1b2a40; backdrop-filter:blur(10px);
       padding:10px 12px; border-radius:14px; box-shadow:0 10px 28px rgba(0,0,0,.35);
-      display:flex; flex-direction:column; align-items:center; gap:10px;
+      display:flex; align-items:center; gap:10px;
+      transform-origin: bottom left; transition:transform .18s ease, opacity .18s ease;
     }
-    .social-name{color:#fff; font-weight:800; font-size:12px; letter-spacing:.2px; opacity:.95}
-    .social-buttons{display:flex; flex-direction:column; gap:10px}
+    .social-card.hidden{ transform:scale(.9); opacity:0; pointer-events:none; }
+    .social-name{color:#fff; font-weight:800; font-size:12px; letter-spacing:.2px; opacity:.95; white-space:nowrap}
+    .social-buttons{display:flex; gap:8px}
     .social-btn{
-      width:44px; height:44px; border-radius:50%; display:grid; place-items:center;
+      width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
       background:#0f1624; border:1px solid #25324a; cursor:pointer; transition:background .2s ease, box-shadow .2s ease;
     }
-    .social-btn:hover{ background:#132139; box-shadow:0 10px 20px rgba(0,0,0,.35); animation:wiggle .25s linear 1; }
-    .social-btn:active{ animation:wiggle .25s linear 1; }
-    .social-btn svg{ width:22px; height:22px }
-    .social-note{ color:#a8b3c7; font-size:10px; text-align:center; opacity:.8 }
-    @keyframes wiggle{
-      0%{ transform:translate(0,0) rotate(0deg); }
-      25%{ transform:translate(-1px,0) rotate(-2deg); }
-      50%{ transform:translate(1px,0) rotate(2deg); }
-      75%{ transform:translate(-1px,0) rotate(-2deg); }
-      100%{ transform:translate(0,0) rotate(0deg); }
-    }
+    .social-btn:hover{ background:#132139; box-shadow:0 10px 20px rgba(0,0,0,.35); }
+    .social-btn svg{ width:20px; height:20px }
 
     /* RESPONSIVE --------------------------------------------------------- */
     @media (max-width: 860px){
-      /* iOS performans için fixed arka planı kapat */
       body{ background-attachment: scroll; }
-      .shell{ margin-bottom: 72px; }
-    }
-    @media (max-width: 680px){
-      /* Formu mobil için 2 sütuna indir: etiket + input */
-      .form{
-        grid-template-columns: 1fr minmax(96px, 140px);
-        gap:12px 10px;
-        padding:14px 12px;
-      }
-      .col-head{ font-size:12px }
-      label{ font-size:14.5px }
-      input[type="number"]{ font-size:16px; min-height:44px; }
-      .result{ gap:10px }
-      .actions{ width:100% }
-      .actions .btn{ flex:1 }
-      /* Sosyal kartı alt-orta konumla */
-      .social{ left:50%; transform:translateX(-50%); bottom:16px }
-      .social-card{ flex-direction:row; gap:10px; padding:8px 10px }
-      .social-buttons{ flex-direction:row }
+      /* Sosyal kart açıldığında butonları örtmesin diye alt boşluk */
+      .shell{ margin-bottom: 110px; }
     }
     @media (min-width: 861px){
-      body{ background-attachment: fixed; } /* sadece geniş ekranda */
+      body{ background-attachment: fixed; }
     }
   </style>
 </head>
@@ -249,9 +217,17 @@
     </section>
   </main>
 
-  <!-- Sosyal kart -->
+  <!-- Sosyal kart (collapse) -->
   <aside class="social" aria-label="Serdar Aydemir social links">
-    <div class="social-card">
+    <button class="social-toggle" id="socialToggle" aria-expanded="false" aria-controls="socialCard" title="Profiller">
+      <!-- küçük “üç kutu” logosu -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="22" height="22">
+        <rect x="2" y="22" width="18" height="18" fill="#0b2a4a" stroke="#fff" stroke-width="2"/>
+        <rect x="23" y="22" width="18" height="18" fill="#f1a13f" stroke="#fff" stroke-width="2"/>
+        <rect x="44" y="22" width="18" height="18" fill="#888" stroke="#fff" stroke-width="2"/>
+      </svg>
+    </button>
+    <div class="social-card hidden" id="socialCard">
       <div class="social-name">Contact</div>
       <div class="social-buttons">
         <a class="social-btn" href="https://www.linkedin.com/in/aydemirserdar/" target="_blank" rel="noopener" aria-label="LinkedIn">
@@ -261,7 +237,6 @@
           <svg viewBox="0 0 24 24" fill="#e6e8ec" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58 0-.29-.01-1.06-.02-2.09-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75.08-.74.08-.74 1.22.09 1.87 1.25 1.87 1.25 1.08 1.86 2.83 1.32 3.52 1.01.11-.79.42-1.32.77-1.62-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.47 5.93.43.37.82 1.1.82 2.22 0 1.6-.01 2.89-.01 3.29 0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
         </a>
       </div>
-      
     </div>
   </aside>
 
@@ -276,25 +251,16 @@
     const ALL_IDS = Object.keys(FACTORS);
     let lastTotal = 0;
 
-    function getInt(id){
-      const el=document.getElementById(id);
-      const v=parseInt(el.value,10);
-      return Number.isFinite(v)?v:0;
-    }
+    function getInt(id){ const el=document.getElementById(id); const v=parseInt(el.value,10); return Number.isFinite(v)?v:0; }
 
     function setLoading(state){
       const btn = document.getElementById('btnBereken');
       if(state){
-        btn.classList.add('loading');
-        btn.disabled = true;
-        btn.dataset.label = btn.textContent;
-        btn.textContent = 'Berekenen…';
-        const sp = document.createElement('span');
-        sp.className = 'spinner';
-        btn.appendChild(sp);
+        btn.classList.add('loading'); btn.disabled = true;
+        btn.dataset.label = btn.textContent; btn.textContent = 'Berekenen…';
+        const sp = document.createElement('span'); sp.className = 'spinner'; btn.appendChild(sp);
       }else{
-        btn.classList.remove('loading');
-        btn.disabled = false;
+        btn.classList.remove('loading'); btn.disabled = false;
         if(btn.dataset.label){ btn.textContent = btn.dataset.label; delete btn.dataset.label; }
       }
     }
@@ -337,6 +303,14 @@
     }
 
     document.getElementById("result").textContent = "Totaal Omvang: 0.000 meter";
+
+    // Sosyal kart toggle (varsayılan kapalı)
+    const toggle = document.getElementById('socialToggle');
+    const card = document.getElementById('socialCard');
+    toggle.addEventListener('click', ()=>{
+      const hidden = card.classList.toggle('hidden');
+      toggle.setAttribute('aria-expanded', String(!hidden));
+    });
   </script>
 </body>
 </html>
