@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Omvang Rekenmachine</title>
-
   <link rel="icon" type="image/svg+xml"
         href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect x="2" y="22" width="18" height="18" fill="%230b2a4a" stroke="%23fff" stroke-width="2"/%3E%3Crect x="23" y="22" width="18" height="18" fill="%23f1a13f" stroke="%23fff" stroke-width="2"/%3E%3Crect x="44" y="22" width="18" height="18" fill="%23888" stroke="%23fff" stroke-width="2"/%3E%3C/svg%3E'>
-
   <style>
     :root{
       --navy:#0b2a4a; --navy-ink:#081b30; --orange:#f1a13f;
@@ -16,8 +14,6 @@
       --col-label:320px; --col-input:200px;
       --radius:12px; --shadow:0 10px 26px rgba(0,0,0,.45);
       --shadow-soft:0 6px 16px rgba(0,0,0,.35);
-      --glass:rgba(10,20,35,.6);
-      --glow:0 0 0 0 rgba(241,161,63,.0), 0 0 0 0 rgba(241,161,63,.0);
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
@@ -26,15 +22,13 @@
       background:
         linear-gradient(rgba(8,12,20,var(--mask)), rgba(8,12,20,var(--mask))),
         url('assets/bg.jpg') center/cover no-repeat;
-      display:flex;flex-direction:column;align-items:center;
-      min-height:100svh;
+      display:flex;flex-direction:column;align-items:center;min-height:100svh;
     }
 
     /* Topbar */
     .topbar{width:100%;background:rgba(11,42,74,.78);backdrop-filter: blur(6px);border-bottom:1px solid #0d2136;}
     .topbar-inner{
-      max-width:980px;margin:0 auto;
-      padding:16px 20px;
+      max-width:980px;margin:0 auto;padding:16px 20px;
       display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
     }
     .brand{font-weight:800;color:#fff;letter-spacing:.3px;display:flex;align-items:center;font-size:clamp(16px,2.4vw,18px)}
@@ -52,7 +46,6 @@
     .card-head{background:var(--navy);padding:14px 16px;border-bottom:1px solid var(--navy-ink);text-align:center}
     .card-head h2{margin:0;color:#fff;font-size:clamp(16px,2.8vw,18px);font-weight:700}
 
-    /* Form (desktop) */
     .form{
       display:grid;gap:14px;padding:18px 16px;background:var(--field);
       grid-template-columns:var(--col-label) var(--col-input);
@@ -60,7 +53,6 @@
     }
     .col-head{font-size:12.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:#c7d3e6;padding-bottom:2px;border-bottom:1px dashed var(--border);text-align:left}
     label{font-weight:700;color:#cdd8ea;text-align:left;font-size:15px}
-
     input[type="number"]{
       width:100%;padding:12px 12px;font-size:16px;border:1px solid var(--border);
       border-radius:10px;background:var(--field);color:#e6e8ec;min-height:44px;
@@ -68,7 +60,6 @@
     }
     input[type="number"]:focus{border-color:#9cc1ff;box-shadow:0 0 0 3px rgba(61,128,255,.18);outline:none}
 
-    /* Result */
     .result{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:var(--field);border-top:1px solid var(--border);flex-wrap:wrap}
     .metric{
       background:var(--metric-bg);padding:10px 12px;border:1px solid var(--metric-border);
@@ -85,75 +76,24 @@
     }
 
     .actions{display:flex;gap:10px;flex-wrap:wrap}
-
-    /* Buttons */
     .btn{
       position:relative; overflow:hidden;
       padding:12px 16px;border-radius:10px;font-weight:800;cursor:pointer;border:none;
-      transition:box-shadow .25s ease, transform .12s ease;
-      min-height:44px; font-size:16px;
+      min-height:44px; font-size:16px; transition:box-shadow .25s ease, transform .12s ease;
     }
     .btn:active{ transform:translateY(1px) }
-    .btn::after{ content:""; position:absolute; inset:-2px; pointer-events:none; box-shadow:var(--glow); transition:box-shadow .25s ease; border-radius:12px; }
-    .btn:hover::after{ box-shadow:0 0 0 4px rgba(241,161,63,.12), 0 6px 18px rgba(241,161,63,.22); }
     .btn::before{ content:""; position:absolute; top:0; left:-150%; width:120%; height:100%; background:linear-gradient(110deg, transparent 0%, rgba(255,255,255,.22) 40%, transparent 60%); transform:skewX(-16deg); }
     .btn:hover::before{ animation:shimmer 800ms ease forwards; }
     @keyframes shimmer{ to{ left:130%; } }
-
     .btn-primary{background:var(--orange);color:#1b1b1b;box-shadow:0 6px 16px rgba(242,140,27,.22)}
     .btn-ghost{background:transparent;color:#fff;border:1px solid #555b66}
 
-    /* Loading */
-    .btn-primary.loading{ position:relative; color:#1b1b1b; }
-    .btn-primary.loading .spinner{
-      display:inline-block; width:16px; height:16px; border:2px solid rgba(0,0,0,.25);
-      border-top-color:#1b1b1b; border-radius:50%; margin-left:8px;
-      animation:spin .8s linear infinite; vertical-align:-3px;
-    }
-    @keyframes spin{ to{ transform:rotate(360deg) } }
-
-    /* Sosyal: masaüstünde kart, mobilde sadece iki ikon */
-    .social{
-      position:fixed; left:16px; bottom:16px; z-index:1000;
-      display:flex; flex-direction:column; align-items:flex-start; gap:8px;
-    }
-    .social-card{
-      background:var(--glass); border:1px solid #1b2a40; backdrop-filter:blur(10px);
-      padding:10px 12px; border-radius:14px; box-shadow:0 10px 28px rgba(0,0,0,.35);
-      display:flex; align-items:center; gap:10px;
-    }
-    .social-name{color:#fff; font-weight:800; font-size:12px; letter-spacing:.2px; opacity:.95; white-space:nowrap}
-    .social-buttons{display:flex; gap:8px}
-    .social-btn{
-      width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
-      background:#0f1624; border:1px solid #25324a; cursor:pointer; transition:background .2s ease, box-shadow .2s ease;
-    }
-    .social-btn:hover{ background:#132139; box-shadow:0 10px 20px rgba(0,0,0,.35); }
-    .social-btn svg{ width:20px; height:20px }
-
-    /* Sadece mobilde görünen hızlı ikonlar */
-    .social-quick{ display:none; gap:8px }
-    .social-quick .social-btn{ width:44px; height:44px }
-
-    /* RESPONSIVE --------------------------------------------------------- */
-    @media (max-width: 860px){
-      body{ background-attachment: scroll; }
-    }
+    @media (max-width: 860px){ body{ background-attachment: scroll; } }
     @media (max-width: 680px){
-      /* Formu mobil için 2 sütun: etiket + input */
-      .form{
-        grid-template-columns: 1fr minmax(96px, 140px);
-        gap:12px 10px;
-        padding:14px 12px;
-      }
+      .form{ grid-template-columns: 1fr minmax(96px, 140px); gap:12px 10px; padding:14px 12px; }
       .actions .btn{ flex:1 }
-      /* Sosyal: kartı kapat, sadece iki ikon göster; butonları kapatmasın diye ek boşluk yok */
-      .social-card{ display:none }
-      .social-quick{ display:flex }
     }
-    @media (min-width: 861px){
-      body{ background-attachment: fixed; }
-    }
+    @media (min-width: 861px){ body{ background-attachment: fixed; } }
   </style>
 </head>
 <body>
@@ -170,6 +110,7 @@
       <nav class="nav">
         <a href="index.html" class="active">Home</a>
         <a href="hoe-werkt-het.html">Hoe werkt het?</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </div>
   </div>
@@ -224,31 +165,6 @@
     </section>
   </main>
 
-  <!-- Sosyal: masaüstü kart + mobil hızlı ikonlar -->
-  <aside class="social" aria-label="Serdar Aydemir social links">
-    <div class="social-card">
-      <div class="social-name">Contact</div>
-      <div class="social-buttons">
-        <a class="social-btn" href="https://www.linkedin.com/in/aydemirserdar/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="#0a66c2" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8 8.5h3.8v2.1h.05c.53-1 1.82-2.1 3.75-2.1C20.4 8.5 21 11.3 21 15.1V24h-4v-8.1c0-1.9-.03-4.3-2.6-4.3-2.6 0-3 2-3 4.1V24H8V8.5z"/></svg>
-        </a>
-        <a class="social-btn" href="https://github.com/SerdarAydemir" target="_blank" rel="noopener" aria-label="GitHub">
-          <svg viewBox="0 0 24 24" fill="#e6e8ec" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58 0-.29-.01-1.06-.02-2.09-3.34 .73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75 .08-.74 .08-.74 1.22 .09 1.87 1.25 1.87 1.25 1.08 1.86 2.83 1.32 3.52 1.01 .11-.79 .42-1.32 .77-1.62-2.66-.3-5.46-1.33-5.46-5.93 0-1.31 .47-2.38 1.24-3.22-.12-.3-.54-1.52 .12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23 .66 1.65 .24 2.87 .12 3.17 .77 .84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.47 5.93 .43 .37 .82 1.1 .82 2.22 0 1.6-.01 2.89-.01 3.29 0 .32 .21 .7 .83 .58A12 12 0 0 0 12 .5z"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- Mobil hızlı ikonlar -->
-    <div class="social-quick">
-      <a class="social-btn" href="https://www.linkedin.com/in/SENIN-KULLANICI-ADIN/" target="_blank" rel="noopener" aria-label="LinkedIn">
-        <svg viewBox="0 0 24 24" fill="#0a66c2" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8 8.5h3.8v2.1h.05c.53-1 1.82-2.1 3.75-2.1C20.4 8.5 21 11.3 21 15.1V24h-4v-8.1c0-1.9-.03-4.3-2.6-4.3-2.6 0-3 2-3 4.1V24H8V8.5z"/></svg>
-      </a>
-      <a class="social-btn" href="https://github.com/SENIN-KULLANICI-ADIN" target="_blank" rel="noopener" aria-label="GitHub">
-        <svg viewBox="0 0 24 24" fill="#e6e8ec" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58 0-.29-.01-1.06-.02-2.09-3.34 .73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.1-.75 .08-.74 .08-.74 1.22 .09 1.87 1.25 1.87 1.25 1.08 1.86 2.83 1.32 3.52 1.01 .11-.79 .42-1.32 .77-1.62-2.66-.3-5.46-1.33-5.46-5.93 0-1.31 .47-2.38 1.24-3.22-.12-.3-.54-1.52 .12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23 .66 1.65 .24 2.87 .12 3.17 .77 .84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.47 5.93 .43 .37 .82 1.1 .82 2.22 0 1.6-.01 2.89-.01 3.29 0 .32 .21 .7 .83 .58A12 12 0 0 0 12 .5z"/></svg>
-      </a>
-    </div>
-  </aside>
-
   <script>
     const FACTORS = {
       doos169:0.125, doos161:0.625, doos162:0.0625, doos163:0.089, doos165:0.25,
@@ -261,24 +177,16 @@
     let lastTotal = 0;
 
     function getInt(id){ const el=document.getElementById(id); const v=parseInt(el.value,10); return Number.isFinite(v)?v:0; }
-
     function setLoading(state){
       const btn = document.getElementById('btnBereken');
       if(state){
-        btn.classList.add('loading'); btn.disabled = true;
-        btn.dataset.label = btn.textContent; btn.textContent = 'Berekenen…';
-        const sp = document.createElement('span'); sp.className = 'spinner'; btn.appendChild(sp);
+        btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Berekenen…';
+        const sp = document.createElement('span'); sp.style.cssText='display:inline-block;width:16px;height:16px;border:2px solid rgba(0,0,0,.25);border-top-color:#1b1b1b;border-radius:50%;margin-left:8px;vertical-align:-3px;animation:spin .8s linear infinite';
+        sp.className='spinner'; btn.appendChild(sp);
       }else{
-        btn.classList.remove('loading'); btn.disabled = false;
-        if(btn.dataset.label){ btn.textContent = btn.dataset.label; delete btn.dataset.label; }
+        btn.disabled = false; if(btn.dataset.label){ btn.textContent = btn.dataset.label; delete btn.dataset.label; }
       }
     }
-
-    function animateMetric(){
-      const m = document.getElementById("result");
-      m.classList.remove('flash'); void m.offsetWidth; m.classList.add('flash');
-    }
-
     function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
     function countUp(from, to, duration=450){
       const el = document.getElementById("result");
@@ -291,7 +199,6 @@
       }
       requestAnimationFrame(frame);
     }
-
     function bereken(){
       setLoading(true);
       requestAnimationFrame(()=>{
@@ -299,19 +206,13 @@
         ALL_IDS.forEach(id=>{ totaal += getInt(id) * FACTORS[id]; });
         countUp(lastTotal, totaal, 450);
         lastTotal = totaal;
-        animateMetric();
         setTimeout(()=>setLoading(false), 450);
       });
     }
-
     function resetForm(){
       ALL_IDS.forEach(id=>{const el=document.getElementById(id);if(el)el.value=0;});
-      countUp(lastTotal, 0, 450);
-      lastTotal = 0;
-      animateMetric();
+      countUp(lastTotal, 0, 450); lastTotal = 0;
     }
-
-    document.getElementById("result").textContent = "Totaal Omvang: 0.000 meter";
   </script>
 </body>
 </html>
