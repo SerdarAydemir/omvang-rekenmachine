@@ -14,15 +14,28 @@
       --col-label:320px; --col-input:200px;
       --radius:12px; --shadow:0 10px 26px rgba(0,0,0,.45);
       --shadow-soft:0 6px 16px rgba(0,0,0,.35);
+      --bg-base:#0a0f1a;
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+
+    /* SABİT ARKA PLAN katmanı (mobil gri sorun fix) */
     body{
       color:var(--text);
+      background:var(--bg-base);
+      min-height:100dvh;
+      position:relative;
+      -webkit-tap-highlight-color: transparent;
+      display:flex;flex-direction:column;align-items:center;
+    }
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
       background:
         linear-gradient(rgba(8,12,20,var(--mask)), rgba(8,12,20,var(--mask))),
         url('assets/bg.jpg') center/cover no-repeat;
-      display:flex;flex-direction:column;align-items:center;min-height:100svh;
+      transform:translateZ(0);
+      will-change: transform;
     }
 
     /* Topbar */
@@ -88,12 +101,10 @@
     .btn-primary{background:var(--orange);color:#1b1b1b;box-shadow:0 6px 16px rgba(242,140,27,.22)}
     .btn-ghost{background:transparent;color:#fff;border:1px solid #555b66}
 
-    @media (max-width: 860px){ body{ background-attachment: scroll; } }
     @media (max-width: 680px){
       .form{ grid-template-columns: 1fr minmax(96px, 140px); gap:12px 10px; padding:14px 12px; }
       .actions .btn{ flex:1 }
     }
-    @media (min-width: 861px){ body{ background-attachment: fixed; } }
   </style>
 </head>
 <body>
@@ -177,16 +188,6 @@
     let lastTotal = 0;
 
     function getInt(id){ const el=document.getElementById(id); const v=parseInt(el.value,10); return Number.isFinite(v)?v:0; }
-    function setLoading(state){
-      const btn = document.getElementById('btnBereken');
-      if(state){
-        btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Berekenen…';
-        const sp = document.createElement('span'); sp.style.cssText='display:inline-block;width:16px;height:16px;border:2px solid rgba(0,0,0,.25);border-top-color:#1b1b1b;border-radius:50%;margin-left:8px;vertical-align:-3px;animation:spin .8s linear infinite';
-        sp.className='spinner'; btn.appendChild(sp);
-      }else{
-        btn.disabled = false; if(btn.dataset.label){ btn.textContent = btn.dataset.label; delete btn.dataset.label; }
-      }
-    }
     function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
     function countUp(from, to, duration=450){
       const el = document.getElementById("result");
@@ -200,14 +201,10 @@
       requestAnimationFrame(frame);
     }
     function bereken(){
-      setLoading(true);
-      requestAnimationFrame(()=>{
-        let totaal=0;
-        ALL_IDS.forEach(id=>{ totaal += getInt(id) * FACTORS[id]; });
-        countUp(lastTotal, totaal, 450);
-        lastTotal = totaal;
-        setTimeout(()=>setLoading(false), 450);
-      });
+      let totaal=0;
+      ALL_IDS.forEach(id=>{ const n = parseInt(document.getElementById(id).value||"0",10)||0; totaal += n * FACTORS[id]; });
+      countUp(lastTotal, totaal, 450);
+      lastTotal = totaal;
     }
     function resetForm(){
       ALL_IDS.forEach(id=>{const el=document.getElementById(id);if(el)el.value=0;});

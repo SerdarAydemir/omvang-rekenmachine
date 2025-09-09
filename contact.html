@@ -10,19 +10,31 @@
     :root{
       --navy:#0b2a4a; --orange:#f1a13f;
       --text:#e6e8ec; --muted:#a8b3c7; --border:#273244; --field:#121826;
-      --mask:0.60; --radius:14px; --shadow:0 14px 32px rgba(0,0,0,.45);
+      --radius:14px; --shadow:0 14px 32px rgba(0,0,0,.45);
       --chip:#0f1624; --chip-border:#1b2536;
       --container: 980px;
+      --bg-base:#0a0f1a;
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+
+    /* Arka plan FIX: pseudo-layer ile sabitlenmiş arkaplan (mobilde gri kayma yok) */
     body{
       color:var(--text);
+      background:var(--bg-base);
+      min-height:100dvh; /* mobil toolbar yükseklik değişimine dayanıklı */
+      position:relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
       background:
         radial-gradient(1200px 600px at 80% -10%, rgba(241,161,63,.12), transparent 60%),
-        linear-gradient(rgba(8,12,20,var(--mask)), rgba(8,12,20,var(--mask))),
+        linear-gradient(rgba(8,12,20,.60), rgba(8,12,20,.60)),
         url('assets/bg.jpg') center/cover no-repeat;
-      display:flex;flex-direction:column;min-height:100svh;
+      transform:translateZ(0); /* iOS repaint stabilizasyonu */
+      will-change: transform;
     }
 
     /* Topbar */
@@ -42,7 +54,7 @@
     .hero h1{color:#fff;font-size:clamp(24px,4vw,32px);margin:10px 0 6px}
     .hero p{margin:0;color:var(--muted);font-size:clamp(13px,2.6vw,15px)}
 
-    /* Grid (daha geniş kartlar) */
+    /* Grid (geniş kartlar + mobil kırılım) */
     .shell{max-width:calc(var(--container) + 40px);margin:24px auto 72px;padding:0 16px}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     @media (max-width: 1000px){ .grid{ grid-template-columns:1fr 1fr } }
@@ -57,11 +69,10 @@
       background:radial-gradient(280px 160px at 120% -20%, rgba(241,161,63,.12), transparent 60%); }
     .chip{
       display:inline-flex; align-items:center; gap:8px;
-      background:var(--chip); border:1px solid var(--chip-border); border-radius:999px; padding:8px 12px; font-weight:700;
+      background:#0f1624; border:1px solid var(--chip-border); border-radius:999px; padding:8px 12px; font-weight:700;
     }
     .chip svg{ width:18px; height:18px }
 
-    /* Metinler daha rahat sığsın */
     .card h3{
       margin:0;color:#fff;font-size:clamp(16px,2.4vw,19px);
       overflow-wrap:anywhere; word-break:break-word; line-height:1.25;
@@ -80,9 +91,6 @@
     .card a.cta:hover{ filter:brightness(1.04) }
 
     .note{max-width:var(--container);margin:18px auto 56px;padding:0 16px;color:#9fb0c8;text-align:center;font-size:13px}
-
-    @media (max-width: 860px){ body{ background-attachment: scroll; } }
-    @media (min-width: 861px){ body{ background-attachment: fixed; } }
   </style>
 </head>
 <body>
@@ -146,6 +154,6 @@
     </section>
   </main>
 
-  <p class="note">Bedankt voor u interesse. Ik probeer zo snel mogelijk te reageren.</p>
+  <p class="note">Bedankt voor je interesse. Ik probeer zo snel mogelijk te reageren.</p>
 </body>
 </html>

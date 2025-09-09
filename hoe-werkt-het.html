@@ -11,16 +11,25 @@
       --navy:#0b2a4a; --orange:#f1a13f;
       --text:#e6e8ec; --muted:#a8b3c7; --border:#273244; --field:#121826;
       --mask:0.60; --radius:12px; --shadow:0 10px 26px rgba(0,0,0,.45);
-      --ink-dim:#a9b7cd;
+      --ink-dim:#a9b7cd; --bg-base:#0a0f1a;
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+
+    /* SABİT ARKA PLAN katmanı */
     body{
       color:var(--text);
+      background:var(--bg-base);
+      min-height:100dvh; position:relative; -webkit-tap-highlight-color:transparent;
+      display:flex;flex-direction:column;align-items:center;
+    }
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:-1; pointer-events:none;
       background:
         linear-gradient(rgba(8,12,20,var(--mask)), rgba(8,12,20,var(--mask))),
         url('assets/bg.jpg') center/cover no-repeat;
-      display:flex;flex-direction:column;align-items:center;min-height:100svh;
+      transform:translateZ(0); will-change: transform;
     }
 
     .topbar{width:100%;background:rgba(11,42,74,.78);backdrop-filter: blur(6px);border-bottom:1px solid #0d2136;}
@@ -43,14 +52,15 @@
     h2{margin:10px 0 8px;color:#fff;font-size:clamp(18px,3.2vw,22px)}
     h3{margin:18px 0 8px;color:#e9eef7;font-size:clamp(16px,2.8vw,18px)}
     p,ul{color:#cdd8ea;line-height:1.65;font-size:clamp(14px,2.8vw,16px)}
+    code{background:#0f1624;border:1px solid #1b2536;color:#e8eefc;border-radius:6px;padding:2px 6px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,monospace}
+    .back{display:inline-block;margin-top:16px;color:#f1a13f;text-decoration:none;font-weight:800}
+    .back:hover{text-decoration:underline}
+
     .viz{margin:16px 0}
     .viz-card{background:#0f1624;border:1px solid #1b2536;border-radius:12px;padding:12px;margin-bottom:16px}
     .viz-title{text-align:center;color:#e8eefc;font-weight:800;margin:0 0 8px;font-size:clamp(14px,2.8vw,16px)}
     svg{width:100%;height:auto;display:block;margin:auto}
     .cap{color:#a9b7cd;font-size:clamp(12px,2.6vw,13px);margin:8px 2px 0;text-align:center}
-
-    @media (max-width: 860px){ body{ background-attachment: scroll; } }
-    @media (min-width: 861px){ body{ background-attachment: fixed; } }
   </style>
 </head>
 <body>
@@ -83,7 +93,7 @@
     <article class="doc">
       <h2>1) Formule</h2>
       <p>De totale omvang = Σ (aantal dozen × lengte per doos in meter)</p>
-      
+     
 
       <h3>Herkomst van de lengtes</h3>
       <p>
@@ -92,7 +102,7 @@
       </p>
 
       <div class="viz">
-        <!-- 1) Standart 10 kutu = 1 plank -->
+        <!-- 1) Standaard: 10 dozen -->
         <div class="viz-card">
           <p class="viz-title">Standaard: 10 dozen = 1 plank (1,25 m)</p>
           <svg viewBox="0 0 960 240" preserveAspectRatio="xMidYMid meet">
@@ -115,7 +125,7 @@
           <p class="cap">Elke doos ≈ 0,125 m (1,25 ÷ 10)</p>
         </div>
 
-        <!-- 2) 182 yatay: 8 kutu = 1 plank -->
+        <!-- 2) Type 182 (horizontaal) -->
         <div class="viz-card">
           <p class="viz-title">Type 182 (horizontaal): 8 dozen ≈ 1 plank</p>
           <svg viewBox="0 0 960 240" preserveAspectRatio="xMidYMid meet">
@@ -136,7 +146,7 @@
           <p class="cap">Elke doos ≈ 0,15625 m (1,25 ÷ 8)</p>
         </div>
 
-        <!-- 3) Karışık plank örneği -->
+        <!-- 3) Gemengd -->
         <div class="viz-card">
           <p class="viz-title">Gemengd op één plank (indicatief)</p>
           <svg viewBox="0 0 960 240" preserveAspectRatio="xMidYMid meet">
@@ -164,7 +174,7 @@
         </div>
       </div>
 
-      <a class="back" href="index.html" style="display:inline-block;margin-top:16px;color:#f1a13f;text-decoration:none;font-weight:800">← Terug naar Home</a>
+      <a class="back" href="index.html">← Terug naar Home</a>
     </article>
   </main>
 </body>
