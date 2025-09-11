@@ -14,15 +14,14 @@
       --col-label:320px; --col-input:200px;
       --radius:12px; --shadow:0 10px 26px rgba(0,0,0,.45);
       --shadow-soft:0 6px 16px rgba(0,0,0,.35);
-      --bg-base:#0a0f1a;
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 
-    /* SABİT ARKA PLAN katmanı (mobil gri sorun fix) */
+    /* Arkaplanı sabitle (mobil gri kayma fix) */
     body{
       color:var(--text);
-      background:var(--bg-base);
+      background:#0a0f1a;
       min-height:100dvh;
       position:relative;
       -webkit-tap-highlight-color: transparent;
@@ -59,6 +58,7 @@
     .card-head{background:var(--navy);padding:14px 16px;border-bottom:1px solid var(--navy-ink);text-align:center}
     .card-head h2{margin:0;color:#fff;font-size:clamp(16px,2.8vw,18px);font-weight:700}
 
+    /* Form */
     .form{
       display:grid;gap:14px;padding:18px 16px;background:var(--field);
       grid-template-columns:var(--col-label) var(--col-input);
@@ -66,11 +66,13 @@
     }
     .col-head{font-size:12.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:#c7d3e6;padding-bottom:2px;border-bottom:1px dashed var(--border);text-align:left}
     label{font-weight:700;color:#cdd8ea;text-align:left;font-size:15px}
+
     input[type="number"]{
       width:100%;padding:12px 12px;font-size:16px;border:1px solid var(--border);
       border-radius:10px;background:var(--field);color:#e6e8ec;min-height:44px;
       -webkit-appearance: none; appearance: none;
     }
+    input[type="number"]::placeholder{color:#74829a}
     input[type="number"]:focus{border-color:#9cc1ff;box-shadow:0 0 0 3px rgba(61,128,255,.18);outline:none}
 
     .result{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;background:var(--field);border-top:1px solid var(--border);flex-wrap:wrap}
@@ -141,29 +143,29 @@
         <div class="col-head">Doostypen</div>
         <div class="col-head">Aantal dozen</div>
 
-        <label for="doos169">169 (Standaard Doos) =</label><input type="number" id="doos169" value="" min="0" step="1" />
-        <label for="doos161">161 =</label><input type="number" id="doos161" value="" min="0" step="1" />
-        <label for="doos162">162 =</label><input type="number" id="doos162" value="" min="0" step="1" />
-        <label for="doos163">163 =</label><input type="number" id="doos163" value="" min="0" step="1" />
-        <label for="doos165">165 =</label><input type="number" id="doos165" value="" min="0" step="1" />
-        <label for="doos170">170 =</label><input type="number" id="doos170" value="" min="0" step="1" />
-        <label for="doos171">171 =</label><input type="number" id="doos171" value="" min="0" step="1" />
-        <label for="doos176">176 =</label><input type="number" id="doos176" value="" min="0" step="1" />
-        <label for="doos182">182 =</label><input type="number" id="doos182" value="" min="0" step="1" />
-        <label for="doos183">183 =</label><input type="number" id="doos183" value="" min="0" step="1" />
-        <label for="doos186">186 =</label><input type="number" id="doos186" value="" min="0" step="1" />
-        <label for="doos193">193 =</label><input type="number" id="doos193" value="" min="0" step="1" />
-        <label for="doos194">194 =</label><input type="number" id="doos194" value="" min="0" step="1" />
-        <label for="doos196">196 =</label><input type="number" id="doos196" value="" min="0" step="1" />
-        <label for="doos198">198 =</label><input type="number" id="doos198" value="" min="0" step="1" />
-        <label for="doos300">300 (Grote Tekenmap) =</label><input type="number" id="doos300" value="" min="0" step="1" />
-        <label for="doos301">301 (Kleine Tekenmap) =</label><input type="number" id="doos301" value="" min="0" step="1" />
-        <label for="doos402">402 =</label><input type="number" id="doos402" value="" min="0" step="1" />
-        <label for="doos415">415 =</label><input type="number" id="doos415" value="" min="0" step="1" />
-        <label for="doos416">416 =</label><input type="number" id="doos416" value="" min="0" step="1" />
-        <label for="doos503">503 =</label><input type="number" id="doos503" value="" min="0" step="1" />
-        <label for="doos600">600 (Roldoos) =</label><input type="number" id="doos600" value="" min="0" step="1" />
-        <label for="doos701">701 =</label><input type="number" id="doos701" value="" min="0" step="1" />
+        <label for="doos169">169 (Standaard Doos) =</label><input type="number" id="doos169" min="0" step="1" placeholder="" />
+        <label for="doos161">161 =</label><input type="number" id="doos161" min="0" step="1" placeholder="" />
+        <label for="doos162">162 =</label><input type="number" id="doos162" min="0" step="1" placeholder="" />
+        <label for="doos163">163 =</label><input type="number" id="doos163" min="0" step="1" placeholder="" />
+        <label for="doos165">165 =</label><input type="number" id="doos165" min="0" step="1" placeholder="" />
+        <label for="doos170">170 =</label><input type="number" id="doos170" min="0" step="1" placeholder="" />
+        <label for="doos171">171 =</label><input type="number" id="doos171" min="0" step="1" placeholder="" />
+        <label for="doos176">176 =</label><input type="number" id="doos176" min="0" step="1" placeholder="" />
+        <label for="doos182">182 =</label><input type="number" id="doos182" min="0" step="1" placeholder="" />
+        <label for="doos183">183 =</label><input type="number" id="doos183" min="0" step="1" placeholder="" />
+        <label for="doos186">186 =</label><input type="number" id="doos186" min="0" step="1" placeholder="" />
+        <label for="doos193">193 =</label><input type="number" id="doos193" min="0" step="1" placeholder="" />
+        <label for="doos194">194 =</label><input type="number" id="doos194" min="0" step="1" placeholder="" />
+        <label for="doos196">196 =</label><input type="number" id="doos196" min="0" step="1" placeholder="" />
+        <label for="doos198">198 =</label><input type="number" id="doos198" min="0" step="1" placeholder="" />
+        <label for="doos300">300 (Grote Tekenmap) =</label><input type="number" id="doos300" min="0" step="1" placeholder="" />
+        <label for="doos301">301 (Kleine Tekenmap) =</label><input type="number" id="doos301" min="0" step="1" placeholder="" />
+        <label for="doos402">402 =</label><input type="number" id="doos402" min="0" step="1" placeholder="" />
+        <label for="doos415">415 =</label><input type="number" id="doos415" min="0" step="1" placeholder="" />
+        <label for="doos416">416 =</label><input type="number" id="doos416" min="0" step="1" placeholder="" />
+        <label for="doos503">503 =</label><input type="number" id="doos503" min="0" step="1" placeholder="" />
+        <label for="doos600">600 (Roldoos) =</label><input type="number" id="doos600" min="0" step="1" placeholder="" />
+        <label for="doos701">701 =</label><input type="number" id="doos701" min="0" step="1" placeholder="" />
       </div>
 
       <div class="result">
@@ -187,7 +189,6 @@
     const ALL_IDS = Object.keys(FACTORS);
     let lastTotal = 0;
 
-    function getInt(id){ const el=document.getElementById(id); const v=parseInt(el.value,10); return Number.isFinite(v)?v:0; }
     function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
     function countUp(from, to, duration=450){
       const el = document.getElementById("result");
@@ -200,15 +201,26 @@
       }
       requestAnimationFrame(frame);
     }
+
     function bereken(){
       let totaal=0;
-      ALL_IDS.forEach(id=>{ const n = parseInt(document.getElementById(id).value||"0",10)||0; totaal += n * FACTORS[id]; });
+      ALL_IDS.forEach(id=>{
+        const el = document.getElementById(id);
+        const n = parseInt((el.value || "").trim(), 10);
+        const qty = Number.isFinite(n) ? n : 0;
+        totaal += qty * FACTORS[id];
+      });
       countUp(lastTotal, totaal, 450);
       lastTotal = totaal;
     }
+
     function resetForm(){
-      ALL_IDS.forEach(id=>{const el=document.getElementById(id);if(el)el.value=0;});
-      countUp(lastTotal, 0, 450); lastTotal = 0;
+      ALL_IDS.forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.value = "";  // Sıfır değil, tamamen boş
+      });
+      countUp(lastTotal, 0, 450);
+      lastTotal = 0;
     }
   </script>
 </body>
